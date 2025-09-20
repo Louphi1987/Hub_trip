@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>Trip in Scotland — Yacintha & Loufi</title>
-  <meta name="description" content="App de voyage fun et colorée — Itinéraire, Programme, Photos, Notes, Dépenses, Checklist." />
+  <meta name="description" content="Fun, colorful mobile travel app — Itinerary, Program, Photos, Notes, Expenses, Checklist." />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      /* Palette pastel 'insta' */
+      /* Pastel 'insta' palette */
       --bg:#0b0f1a;
       --panel:rgba(255,255,255,.10);
       --text:#f9fafb;
@@ -17,8 +17,8 @@
       --border:rgba(255,255,255,.15);
       --grad1:#44e4c9;  /* turquoise */
       --grad2:#9b8bff;  /* violet */
-      --grad3:#ff8fb7;  /* corail */
-      --grad4:#ffd36e;  /* jaune doux */
+      --grad3:#ff8fb7;  /* coral */
+      --grad4:#ffd36e;  /* soft yellow */
       --ok:#28d7a9;
       --warn:#ffd36e;
       --danger:#ff7a9c;
@@ -98,7 +98,6 @@
       box-shadow: inset 0 0 0 999px rgba(255,255,255,0); transition: box-shadow .18s;
     }
     input:focus, select:focus, textarea:focus{ box-shadow:0 0 0 2px rgba(155,139,255,.35) }
-
     textarea{min-height:120px; resize:vertical}
 
     /* Gallery */
@@ -138,11 +137,7 @@
       .tab{border-radius:0; min-width:auto; justify-content:center; border-right:1px solid var(--border); box-shadow:none}
       .tab:last-child{border-right:none}
     }
-
-    /* Section spacing under bottom bar */
     .content{padding-bottom:110px}
-
-    /* Micro animations */
     .fade-in{animation:fade .35s ease}
     @keyframes fade{from{opacity:.0; transform:translateY(4px)} to{opacity:1; transform:none}}
   </style>
@@ -157,7 +152,7 @@
           <h1>Trip in Scotland — Yacintha & Loufi 🏴</h1>
           <div class="subtitle">21/09 → 26/09 · Edinburgh & Skye</div>
           <div class="row actions" style="margin-top:10px">
-            <span class="chip">✈️ Arrivée 21/09</span>
+            <span class="chip">✈️ Arrival 21/09</span>
             <span class="chip">🚐 Campervan</span>
             <span class="chip">🏞️ Skye</span>
           </div>
@@ -175,32 +170,32 @@
       <!-- Itinerary -->
       <div id="itinerary" class="card fade-in">
         <h2>
-          <span>🗺️ Itinéraire (éditable)</span>
+          <span>🗺️ Itinerary (editable)</span>
           <span class="row" style="width:100%; max-width:680px">
-            <input type="text" id="newDayDate" placeholder="Date (ex. 21/09)" style="max-width:120px" />
-            <input type="text" id="newDayTitle" placeholder="Titre" style="flex:1;min-width:140px" />
-            <input type="text" id="newDayDetails" placeholder="Détails (optionnel)" style="flex:1;min-width:180px" />
-            <button class="btn primary" id="addDayBtn">＋ Jour</button>
+            <input type="text" id="newDayDate" placeholder="Date (e.g. 21/09)" style="max-width:120px" />
+            <input type="text" id="newDayTitle" placeholder="Title" style="flex:1;min-width:140px" />
+            <input type="text" id="newDayDetails" placeholder="Details (optional)" style="flex:1;min-width:180px" />
+            <button class="btn primary" id="addDayBtn">＋ Add day</button>
           </span>
         </h2>
         <div class="body">
           <div class="list" id="itineraryList"></div>
-          <div class="muted" style="margin-top:6px">Astuce : maintiens “↑/↓” pour réorganiser rapidement.</div>
+          <div class="muted" style="margin-top:6px">Tip: use “↑/↓” to reorder quickly.</div>
         </div>
       </div>
 
       <!-- Program -->
       <div id="program" class="card fade-in" style="display:none">
         <h2>
-          <span>🎯 Programme — Suggestions (Edinburgh)</span>
+          <span>🎯 Program — Suggestions (Edinburgh)</span>
           <span class="row" style="width:100%">
             <select id="programDaySelect" style="flex:1;min-width:140px"></select>
-            <select id="programPick" style="flex:2;min-width:200px"><option value="">— Choisir —</option></select>
-            <button class="btn primary" id="programAdd">Ajouter</button>
+            <select id="programPick" style="flex:2;min-width:200px"><option value="">— Choose —</option></select>
+            <button class="btn primary" id="programAdd">Add</button>
           </span>
         </h2>
         <div class="body">
-          <p class="muted" style="margin-top:0">Choisis un jour, puis une suggestion — elle s’ajoute aux détails de ce jour.</p>
+          <p class="muted" style="margin-top:0">Pick a day, then a suggestion — it gets appended to that day's details.</p>
           <div id="programSuggestions" class="row" style="flex-wrap:wrap"></div>
         </div>
       </div>
@@ -210,14 +205,14 @@
         <h2>
           <span>📷 Photos</span>
           <span class="row">
-            <button class="btn primary" id="addPhotosBtn">＋ Ajouter</button>
+            <button class="btn primary" id="addPhotosBtn">＋ Add</button>
             <input type="file" id="photosInput" accept="image/*" multiple style="display:none" />
           </span>
         </h2>
         <div class="body">
-          <div class="drop" id="dropZone">Appuie sur “Ajouter” (ou glisser-déposer sur ordinateur).</div>
+          <div class="drop" id="dropZone">Tap “Add” (or drag & drop on desktop).</div>
           <div id="galleryGrid" class="gallery" style="margin-top:10px"></div>
-          <p id="galleryEmpty" class="muted" style="text-align:center;display:none">Aucune photo pour l’instant.</p>
+          <p id="galleryEmpty" class="muted" style="text-align:center;display:none">No photos yet.</p>
         </div>
       </div>
 
@@ -225,7 +220,7 @@
       <div id="notes" class="card fade-in" style="display:none">
         <h2>
           <span>📝 Notes</span>
-          <span class="row muted" style="font-size:12px">Horodatage auto <input type="checkbox" id="autoDate" checked /></span>
+          <span class="row muted" style="font-size:12px">Auto timestamp <input type="checkbox" id="autoDate" checked /></span>
         </h2>
         <div class="body">
           <div class="row" style="margin-bottom:8px; gap:8px">
@@ -237,27 +232,27 @@
             <button class="btn">🚐</button>
             <button class="btn">☔️</button>
           </div>
-          <textarea id="notesArea" placeholder="Vos notes, adresses, horaires, souvenirs…"></textarea>
+          <textarea id="notesArea" placeholder="Your notes, addresses, times, memories…"></textarea>
         </div>
       </div>
 
       <!-- Expenses -->
       <div id="expenses" class="card fade-in" style="display:none">
         <h2>
-          <span>💷 Dépenses</span>
+          <span>💷 Expenses</span>
           <span class="row" style="width:100%">
             <select id="payer" style="flex:1;min-width:110px">
               <option value="Yacintha">Yacintha</option>
               <option value="Loufi">Loufi</option>
             </select>
-            <input type="text" id="expenseWhat" placeholder="Quoi" style="flex:2" />
-            <input type="number" id="expenseAmt" placeholder="Montant" step="0.01" style="width:120px" />
+            <input type="text" id="expenseWhat" placeholder="What" style="flex:2" />
+            <input type="number" id="expenseAmt" placeholder="Amount" step="0.01" style="width:120px" />
             <select id="expenseCat" style="flex:1;min-width:130px">
               <option>Food</option><option>Transport</option><option>Accommodation</option>
               <option>Attractions</option><option>Fuel</option><option>Other</option>
             </select>
             <input type="text" id="expenseCur" value="GBP" style="width:90px" />
-            <button class="btn primary" id="expenseAdd">Ajouter</button>
+            <button class="btn primary" id="expenseAdd">Add</button>
           </span>
         </h2>
         <div class="body">
@@ -266,10 +261,10 @@
               <thead>
                 <tr style="color:#e9edff;font-size:14px">
                   <th style="padding:8px;border-bottom:1px solid var(--border); text-align:left">Date</th>
-                  <th style="padding:8px;border-bottom:1px solid var(--border); text-align:left">Payeur</th>
-                  <th style="padding:8px;border-bottom:1px solid var(--border); text-align:left">Quoi</th>
+                  <th style="padding:8px;border-bottom:1px solid var(--border); text-align:left">Payer</th>
+                  <th style="padding:8px;border-bottom:1px solid var(--border); text-align:left">What</th>
                   <th style="padding:8px;border-bottom:1px solid var(--border); text-align:left">Cat.</th>
-                  <th style="padding:8px;border-bottom:1px solid var(--border); text-align:left">Montant</th>
+                  <th style="padding:8px;border-bottom:1px solid var(--border); text-align:left">Amount</th>
                   <th style="padding:8px;border-bottom:1px solid var(--border)"></th>
                 </tr>
               </thead>
@@ -280,9 +275,9 @@
             <div class="chip">Total Y: <strong id="totY" style="margin-left:6px">0</strong></div>
             <div class="chip">Total L: <strong id="totL" style="margin-left:6px">0</strong></div>
             <div class="chip">Total: <strong id="totAll" style="margin-left:6px">0</strong> <span id="totCur" style="margin-left:4px"></span></div>
-            <div class="chip" style="background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.08))">Ajustement: <strong id="settlement" style="margin-left:6px">—</strong></div>
+            <div class="chip" style="background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.08))">Settlement: <strong id="settlement" style="margin-left:6px">—</strong></div>
           </div>
-          <p class="muted" style="margin-top:8px">Hypothèse 50/50 : si l’un paie plus que la moitié, l’autre rembourse la différence.</p>
+          <p class="muted" style="margin-top:8px">Assumes a 50/50 split. If one paid more than half, the other owes the difference.</p>
         </div>
       </div>
 
@@ -292,51 +287,51 @@
         <div class="body">
           <div class="progress"><div id="progressBar"></div></div>
           <div class="row" style="margin-top:10px;margin-bottom:10px">
-            <input type="text" id="taskInput" placeholder="Ajouter un item" />
-            <button class="btn primary" id="taskAdd">Ajouter</button>
+            <input type="text" id="taskInput" placeholder="Add an item" />
+            <button class="btn primary" id="taskAdd">Add</button>
           </div>
           <div id="taskList" class="list"></div>
         </div>
       </div>
 
-      <footer>💡 Tout est stocké en local dans votre navigateur. Utilisez <strong>Export</strong>/<strong>Import</strong> pour sauvegarder/partager entre appareils.</footer>
+      <footer>💡 Everything is stored locally in your browser. Use <strong>Export</strong>/<strong>Import</strong> to back up or share across devices.</footer>
     </section>
   </div>
 
   <!-- Bottom Tab Bar -->
   <nav class="tabs" id="tabs">
-    <button class="tab active" data-tab="itinerary"><span class="ico">🗺️</span>Itinéraire</button>
-    <button class="tab" data-tab="program"><span class="ico">🎯</span>Programme</button>
+    <button class="tab active" data-tab="itinerary"><span class="ico">🗺️</span>Itinerary</button>
+    <button class="tab" data-tab="program"><span class="ico">🎯</span>Program</button>
     <button class="tab" data-tab="gallery"><span class="ico">📷</span>Photos</button>
     <button class="tab" data-tab="notes"><span class="ico">📝</span>Notes</button>
-    <button class="tab" data-tab="expenses"><span class="ico">💷</span>Dépenses</button>
+    <button class="tab" data-tab="expenses"><span class="ico">💷</span>Expenses</button>
     <button class="tab" data-tab="checklist"><span class="ico">✅</span>Checklist</button>
   </nav>
 
   <script>
-    const STORAGE_KEY = "trip-scotland-yl-insta-v1";
+    const STORAGE_KEY = "trip-scotland-yl-insta-en-v1";
     const defaultData = {
       dates:"21/09 → 26/09",
       itinerary:[
-        {date:"21/09", title:"Arrival — Hotel — Rest", details:"Arrivée à Édimbourg, check-in, soirée cool."},
+        {date:"21/09", title:"Arrival — Hotel — Rest", details:"Arrive in Edinburgh, check in, easy evening."},
         {date:"22/09", title:"Edinburgh visit", details:"Old Town, Royal Mile, Edinburgh Castle, Dean Village."},
-        {date:"23/09", title:"Campervan pick up", details:"Récupérer le van, courses, départ scenic."},
+        {date:"23/09", title:"Campervan pick up", details:"Pick up van, groceries, scenic start."},
         {date:"24/09", title:"Isle of Skye", details:"Fairy Pools, Old Man of Storr, Quiraing."},
-        {date:"25/09", title:"Return Edinburgh — Rest", details:"Retour van, hôtel, Calton Hill sunset."},
-        {date:"26/09", title:"Return Brussels", details:"Transfert aéroport, vol retour."}
+        {date:"25/09", title:"Return to Edinburgh — Rest", details:"Return van, hotel, Calton Hill sunset."},
+        {date:"26/09", title:"Return to Brussels", details:"Airport transfer, flight home."}
       ],
       programSuggestions:[
-        "Edinburgh Castle (visite guidée)",
-        "Arthur's Seat (matin, vue waouh)",
+        "Edinburgh Castle (guided)",
+        "Arthur's Seat (morning, epic view)",
         "Dean Village + Water of Leith",
-        "National Museum of Scotland (gratuit)",
-        "Scottish National Gallery (gratuit)",
-        "Ghost tour Old Town (soir)",
+        "National Museum of Scotland (free)",
+        "Scottish National Gallery (free)",
+        "Old Town ghost tour (evening)",
         "Calton Hill sunset",
         "Princes Street Gardens picnic",
-        "Haggis tasting (pub traditionnel)",
+        "Haggis tasting (traditional pub)",
         "Camera Obscura & Illusions",
-        "Brunch à Stockbridge",
+        "Brunch in Stockbridge",
         "Live folk music (pub night)",
         "Newhaven harbour walk (fish & chips)"
       ],
@@ -344,17 +339,17 @@
       gallery:[],
       expenses:{currency:"GBP", items:[]},
       checklist:[
-        {id:"id",text:"Passeport / ID",done:false},
-        {id:"tickets",text:"Billets / QR codes",done:false},
-        {id:"cards",text:"Cartes bancaires + cash",done:false},
-        {id:"rainjacket",text:"Veste de pluie",done:false},
-        {id:"shoes",text:"Chaussures de marche",done:false},
-        {id:"sleepbag",text:"Sacs de couchage (van)",done:false},
-        {id:"toothbrush",text:"Brosses à dents",done:false},
-        {id:"toothpaste",text:"Dentifrice",done:false},
-        {id:"adapter",text:"Adaptateur UK (Type G)",done:false},
-        {id:"chargers",text:"Chargeurs & powerbank",done:false},
-        {id:"meds",text:"Trousse médocs (ibuprofen, pansements)",done:false}
+        {id:"id",text:"Passport / ID",done:false},
+        {id:"tickets",text:"Flight tickets / QR codes",done:false},
+        {id:"cards",text:"Bank cards + cash",done:false},
+        {id:"rainjacket",text:"Rain jacket",done:false},
+        {id:"shoes",text:"Walking shoes",done:false},
+        {id:"sleepbag",text:"Sleeping bags (van)",done:false},
+        {id:"toothbrush",text:"Toothbrushes",done:false},
+        {id:"toothpaste",text:"Toothpaste",done:false},
+        {id:"adapter",text:"UK plug adapter (Type G)",done:false},
+        {id:"chargers",text:"Chargers & powerbank",done:false},
+        {id:"meds",text:"Meds kit (ibuprofen, plasters)",done:false}
       ]
     };
 
@@ -388,12 +383,12 @@
               <input type="text" value="${escapeHtml(it.title)}" data-k="title" style="min-width:220px" />
             </div>
             <div class="row">
-              <button class="btn" data-action="up" title="Monter">⬆️</button>
-              <button class="btn" data-action="down" title="Descendre">⬇️</button>
-              <button class="btn" data-action="del" title="Supprimer">🗑️</button>
+              <button class="btn" data-action="up" title="Move up">⬆️</button>
+              <button class="btn" data-action="down" title="Move down">⬇️</button>
+              <button class="btn" data-action="del" title="Delete">🗑️</button>
             </div>
           </div>
-          <textarea data-k="details" placeholder="Détails…">${escapeHtml(it.details||"")}</textarea>
+          <textarea data-k="details" placeholder="Details…">${escapeHtml(it.details||"")}</textarea>
         `;
         wrap.querySelector('[data-action="up"]').onclick = ()=>{ if(idx>0){ const a=state.itinerary[idx-1]; state.itinerary[idx-1]=state.itinerary[idx]; state.itinerary[idx]=a; saveState(); renderItinerary(); bootProgram(); } };
         wrap.querySelector('[data-action="down"]').onclick = ()=>{ if(idx<state.itinerary.length-1){ const a=state.itinerary[idx+1]; state.itinerary[idx+1]=state.itinerary[idx]; state.itinerary[idx]=a; saveState(); renderItinerary(); bootProgram(); } };
@@ -436,7 +431,7 @@
       const sel = document.getElementById("programDaySelect");
       sel.innerHTML = "";
       state.itinerary.forEach((it, idx)=>{ const o=document.createElement("option"); o.value=idx; o.textContent=(it.date?it.date+" — ":"")+it.title; sel.appendChild(o); });
-      const pick = document.getElementById("programPick"); pick.innerHTML = '<option value="">— Choisir —</option>';
+      const pick = document.getElementById("programPick"); pick.innerHTML = '<option value="">— Choose —</option>';
       state.programSuggestions.forEach((s,i)=>{ const o=document.createElement("option"); o.value=i; o.textContent=s; pick.appendChild(o); });
       const area = document.getElementById("programSuggestions");
       area.innerHTML = "";
@@ -466,7 +461,7 @@
         fig.innerHTML = `
           <img src="${item.src}" alt="photo" />
           <figcaption style="padding:10px;border-top:1px solid var(--border)">
-            <input type="text" value="${escapeHtml(item.caption||'')}" placeholder="Légende…" data-id="${item.id}" class="caption"/>
+            <input type="text" value="${escapeHtml(item.caption||'')}" placeholder="Caption…" data-id="${item.id}" class="caption"/>
             <div class="row" style="margin-top:6px;justify-content:space-between;font-size:12px;color:var(--muted)">
               <span>${item.date}</span>
               <button class="btn" data-del="${item.id}">🗑️</button>
@@ -558,9 +553,9 @@
       const half=all/2;
       let text="—";
       if(all>0){
-        if(y>half) text="Loufi → Yacintha : "+(y-half).toFixed(2)+" "+cur;
-        else if(l>half) text="Yacintha → Loufi : "+(l-half).toFixed(2)+" "+cur;
-        else text="Équilibré";
+        if(y>half) text="Loufi owes "+(y-half).toFixed(2)+" "+cur+" to Yacintha";
+        else if(l>half) text="Yacintha owes "+(l-half).toFixed(2)+" "+cur+" to Loufi";
+        else text="Balanced";
       }
       document.getElementById("settlement").textContent = text;
     }
@@ -630,7 +625,7 @@
       const reader=new FileReader();
       reader.onload=()=>{
         try{ state = {...state, ...JSON.parse(reader.result)}; saveState(); boot(); }
-        catch(err){ alert("Fichier invalide"); }
+        catch(err){ alert("Invalid file"); }
       };
       reader.readAsText(f);
     });
