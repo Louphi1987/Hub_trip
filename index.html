@@ -1,251 +1,360 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>Trip in Scotland - Yacintha & Loufi (Mobile)</title>
-  <meta name="description" content="Mobile-friendly Trip Hub — Itinerary, Program, Pictures, Notes, Expenses, Checklist." />
+  <title>Trip in Scotland — Yacintha & Loufi</title>
+  <meta name="description" content="App de voyage fun et colorée — Itinéraire, Programme, Photos, Notes, Dépenses, Checklist." />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#0b1020; --bg2:#0f172a; --text:#e5e7eb; --muted:#94a3b8;
-      --accent:#22d3ee; --accent-2:#60a5fa; --border:#1f2937; --card:#0b1222;
-      --shadow:0 10px 30px rgba(0,0,0,.35);
+      /* Palette pastel 'insta' */
+      --bg:#0b0f1a;
+      --panel:rgba(255,255,255,.10);
+      --text:#f9fafb;
+      --muted:#cbd5e1;
+      --card:#0e1424;
+      --border:rgba(255,255,255,.15);
+      --grad1:#44e4c9;  /* turquoise */
+      --grad2:#9b8bff;  /* violet */
+      --grad3:#ff8fb7;  /* corail */
+      --grad4:#ffd36e;  /* jaune doux */
+      --ok:#28d7a9;
+      --warn:#ffd36e;
+      --danger:#ff7a9c;
+      --shadow:0 18px 60px rgba(0,0,0,.45);
+      --glass:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      --radius:20px;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0;background:linear-gradient(180deg,var(--bg), var(--bg2) 40%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
-    .container{max-width:1100px;margin:0 auto;padding:16px}
-    header{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:8px}
-    h1{font-size:clamp(18px,4.8vw,28px);margin:0}
-    .subtitle{color:var(--muted);font-size:13px}
-    .btn{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:14px;cursor:pointer;display:inline-flex;gap:8px;align-items:center;min-height:42px}
-    .btn:active{transform:scale(.98)}
-    .btn.secondary{background:transparent}
-    .content{margin-top:10px;padding-bottom:94px} /* room for bottom tabs */
-    .card{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow)}
-    .card h2{margin:0;padding:14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:17px}
-    .card .body{padding:12px}
-    input[type=text], input[type=number], select, textarea{width:100%;background:#0b1222;border:1px solid var(--border);color:var(--text);padding:12px;border-radius:12px;font-size:16px}
-    textarea{min-height:120px;resize:vertical}
-    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .badge{background:rgba(255,255,255,.06);border:1px solid var(--border);padding:4px 8px;border-radius:999px;font-size:12px;color:#d1d5db}
-    .list{display:grid;gap:10px}
-    .list .item{border:1px solid var(--border);border-radius:14px;padding:12px;background:rgba(255,255,255,.02)}
+    body{
+      margin:0; color:var(--text);
+      font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      background:
+        radial-gradient(1200px 1200px at 100% 0%, #1a1040 0%, transparent 60%),
+        radial-gradient(900px 900px at 0% 100%, #10243d 0%, transparent 60%),
+        linear-gradient(180deg,#0a0d16,#0b0f1a 60%);
+    }
+    .container{max-width:960px;margin:0 auto;padding:14px 16px 110px}
+
+    /* Hero */
+    .hero{
+      position:relative; border-radius:26px; overflow:hidden; padding:18px; margin:8px 0 12px;
+      background:linear-gradient(135deg, rgba(68,228,201,.22), rgba(155,139,255,.22), rgba(255,143,183,.22));
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      isolation:isolate;
+    }
+    .hero .cover{
+      position:absolute; inset:0; pointer-events:none; opacity:.22;
+      background:
+        radial-gradient(800px 300px at 90% 10%, #ff9bc4 0%, transparent 60%),
+        radial-gradient(600px 300px at 10% 90%, #6be9d3 0%, transparent 60%);
+      filter:saturate(120%) blur(0px);
+      z-index:-1;
+    }
+    h1{margin:2px 0 4px; font-size:clamp(20px,5.5vw,28px); letter-spacing:.2px}
+    .subtitle{color:var(--muted); font-weight:600; font-size:14px}
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--glass); padding:8px 12px; border-radius:999px; border:1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+    .actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .btn{
+      background:var(--glass); border:1px solid var(--border); color:var(--text);
+      padding:10px 14px; border-radius:14px; cursor:pointer; display:inline-flex; gap:8px; align-items:center;
+      min-height:42px; transition:.18s transform, .18s filter;
+      backdrop-filter: blur(8px);
+    }
+    .btn:active{transform:translateY(1px) scale(.98)}
+    .btn.primary{
+      background:linear-gradient(90deg, var(--grad1), var(--grad2), var(--grad3));
+      background-size:200% 100%; color:#0b1020; font-weight:800; border:0;
+      animation:flow 8s linear infinite;
+    }
+    @keyframes flow{0%{background-position:0%}100%{background-position:200%}}
+
+    /* Cards */
+    .card{
+      background:var(--glass); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);
+      margin-top:14px; overflow:hidden;
+    }
+    .card h2{
+      margin:0; padding:14px 16px; font-size:17px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      border-bottom:1px solid var(--border);
+    }
+    .card .body{padding:14px 16px}
+    .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .list{display:grid; gap:10px}
+    .item{border:1px solid var(--border); border-radius:16px; padding:12px; background:rgba(255,255,255,.06)}
+    .badge{background:rgba(255,255,255,.10); border:1px solid var(--border); padding:6px 10px; border-radius:999px; font-size:12px; color:#eef2ff; font-weight:700}
+
+    input[type=text], input[type=number], select, textarea{
+      width:100%; background:rgba(2,6,23,.7); border:1px solid var(--border); color:var(--text);
+      padding:12px; border-radius:14px; font-size:16px; outline:none;
+      box-shadow: inset 0 0 0 999px rgba(255,255,255,0); transition: box-shadow .18s;
+    }
+    input:focus, select:focus, textarea:focus{ box-shadow:0 0 0 2px rgba(155,139,255,.35) }
+
+    textarea{min-height:120px; resize:vertical}
+
+    /* Gallery */
+    .drop{border:2px dashed var(--border); border-radius:16px; padding:22px; text-align:center; background:rgba(255,255,255,.06)}
+    .gallery{display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px}
+    .gallery figure{border:1px solid var(--border); border-radius:16px; overflow:hidden; background:#0a0f1e}
+    .gallery img{width:100%; height:150px; object-fit:cover; display:block}
     .muted{color:var(--muted)}
-    .grid{display:grid;gap:10px}
-    @media(min-width:720px){
-      .grid.cols-2{grid-template-columns:repeat(2,1fr)}
-      .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+
+    /* Progress */
+    .progress{height:10px; background:#0b1222; border:1px solid var(--border); border-radius:999px; overflow:hidden}
+    .progress > div{height:100%; background:linear-gradient(90deg, var(--grad1), var(--grad2), var(--grad3), var(--grad4)); width:0%}
+
+    footer{color:#c8d2ff; font-size:12px; margin-top:14px; opacity:.9}
+
+    /* Bottom Tab Bar (mobile-first) */
+    .tabs{
+      position:fixed; left:0; right:0; bottom:0; padding:10px 12px; z-index:50;
+      display:flex; gap:10px; overflow-x:auto; -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory;
+      background:linear-gradient(180deg, rgba(12,18,36,.85), rgba(9,12,24,.95)); backdrop-filter: blur(10px);
+      border-top:1px solid var(--border);
     }
-    .drop{border:2px dashed var(--border);border-radius:16px;padding:22px;text-align:center;background:rgba(255,255,255,.02)}
-    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
-    .gallery figure{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#081022}
-    .gallery img{width:100%;height:150px;object-fit:cover;display:block}
-    .progress{height:10px;background:#0b1222;border:1px solid var(--border);border-radius:999px;overflow:hidden}
-    .progress > div{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%}
-    footer{color:var(--muted);font-size:12px;margin-top:12px}
-    .link{color:#c7d2fe;text-decoration:none}
-    .link:hover{text-decoration:underline}
+    .tab{
+      flex:0 0 auto; scroll-snap-align:start;
+      display:flex; align-items:center; gap:8px;
+      padding:10px 14px; border-radius:999px; border:1px solid var(--border);
+      background:rgba(255,255,255,.08); color:#eef2ff; font-weight:800; letter-spacing:.2px;
+      box-shadow:0 6px 20px rgba(0,0,0,.25); font-size:14px;
+    }
+    .tab .ico{font-size:18px}
+    .tab.active{color:#0b1020; border:0; background:linear-gradient(90deg, var(--grad1), var(--grad2), var(--grad3));}
 
-    /* Bottom mobile tabs */
-    .tabs{position:fixed;left:0;right:0;bottom:0;padding:8px;background:linear-gradient(180deg,rgba(15,23,42,.85),rgba(11,16,32,.95));backdrop-filter:blur(6px);border-top:1px solid var(--border);display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}
-    .tab{flex:0 0 auto;scroll-snap-align:start;padding:10px 12px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:999px;color:#cbd5e1;min-width:max-content;font-weight:700;font-size:14px}
-    .tab.active{background:linear-gradient(90deg,rgba(34,211,238,.2),rgba(96,165,250,.2));color:#fff}
-    .tabs::-webkit-scrollbar{display:none}
-
-    /* Desktop: tabs on top */
+    /* Desktop: grid tabs on top & less bottom space */
     @media(min-width:960px){
-      .tabs{position:static;border:1px solid var(--border);border-radius:14px;background:transparent;gap:0;overflow:visible;display:grid;grid-template-columns:repeat(6,1fr);padding:0;margin-top:10px}
-      .tab{border-radius:0;min-width:unset;border-right:1px solid var(--border);text-align:center}
+      .container{padding-bottom:24px}
+      .tabs{position:static; border-radius:18px; border:1px solid var(--border); background:var(--glass); gap:0; overflow:visible; display:grid; grid-template-columns:repeat(6,1fr); padding:0; margin-top:10px}
+      .tab{border-radius:0; min-width:auto; justify-content:center; border-right:1px solid var(--border); box-shadow:none}
       .tab:last-child{border-right:none}
-      .content{padding-bottom:10px}
     }
+
+    /* Section spacing under bottom bar */
+    .content{padding-bottom:110px}
+
+    /* Micro animations */
+    .fade-in{animation:fade .35s ease}
+    @keyframes fade{from{opacity:.0; transform:translateY(4px)} to{opacity:1; transform:none}}
   </style>
 </head>
 <body>
   <div class="container">
-    <header>
-      <div>
-        <h1>Trip in Scotland — Yacintha & Loufi 🏴</h1>
-        <div class="subtitle" id="subtitle">21/09 → 26/09 — Scotland</div>
+    <!-- Hero -->
+    <section class="hero fade-in">
+      <div class="cover"></div>
+      <div class="row" style="justify-content:space-between; align-items:flex-start; gap:12px;">
+        <div>
+          <h1>Trip in Scotland — Yacintha & Loufi 🏴</h1>
+          <div class="subtitle">21/09 → 26/09 · Edinburgh & Skye</div>
+          <div class="row actions" style="margin-top:10px">
+            <span class="chip">✈️ Arrivée 21/09</span>
+            <span class="chip">🚐 Campervan</span>
+            <span class="chip">🏞️ Skye</span>
+          </div>
+        </div>
+        <div class="row" style="gap:8px">
+          <button class="btn" id="exportBtn">💾 Export</button>
+          <button class="btn" id="importBtn">📥 Import</button>
+          <input type="file" id="fileInput" accept="application/json" style="display:none" />
+        </div>
       </div>
-      <div class="row">
-        <button class="btn" id="exportBtn">💾 Export</button>
-        <button class="btn" id="importBtn">📥 Import</button>
-        <input type="file" id="fileInput" accept="application/json" style="display:none" />
-      </div>
-    </header>
+    </section>
 
+    <!-- Content -->
     <section class="content">
       <!-- Itinerary -->
-      <div id="itinerary" class="card">
+      <div id="itinerary" class="card fade-in">
         <h2>
-          <span>Itinerary (editable)</span>
-          <span class="row">
-            <input type="text" id="newDayDate" placeholder="Date (e.g. 21/09)" style="max-width:120px" />
-            <input type="text" id="newDayTitle" placeholder="Title" style="flex:1;min-width:140px" />
-            <input type="text" id="newDayDetails" placeholder="Details (optional)" style="flex:1;min-width:180px" />
-            <button class="btn" id="addDayBtn">＋ Day</button>
+          <span>🗺️ Itinéraire (éditable)</span>
+          <span class="row" style="width:100%; max-width:680px">
+            <input type="text" id="newDayDate" placeholder="Date (ex. 21/09)" style="max-width:120px" />
+            <input type="text" id="newDayTitle" placeholder="Titre" style="flex:1;min-width:140px" />
+            <input type="text" id="newDayDetails" placeholder="Détails (optionnel)" style="flex:1;min-width:180px" />
+            <button class="btn primary" id="addDayBtn">＋ Jour</button>
           </span>
         </h2>
         <div class="body">
           <div class="list" id="itineraryList"></div>
+          <div class="muted" style="margin-top:6px">Astuce : maintiens “↑/↓” pour réorganiser rapidement.</div>
         </div>
       </div>
 
       <!-- Program -->
-      <div id="program" class="card" style="margin-top:12px; display:none">
+      <div id="program" class="card fade-in" style="display:none">
         <h2>
-          <span>Program — suggestions (Edinburgh)</span>
+          <span>🎯 Programme — Suggestions (Edinburgh)</span>
           <span class="row" style="width:100%">
             <select id="programDaySelect" style="flex:1;min-width:140px"></select>
-            <select id="programPick" style="flex:2;min-width:180px"><option value="">— Choose —</option></select>
-            <button class="btn" id="programAdd">Add</button>
+            <select id="programPick" style="flex:2;min-width:200px"><option value="">— Choisir —</option></select>
+            <button class="btn primary" id="programAdd">Ajouter</button>
           </span>
         </h2>
         <div class="body">
-          <p class="muted" style="margin-top:0">Pick a day, choose a suggestion, tap Add — it’s appended to that day.</p>
-          <div id="programSuggestions" class="grid cols-2"></div>
+          <p class="muted" style="margin-top:0">Choisis un jour, puis une suggestion — elle s’ajoute aux détails de ce jour.</p>
+          <div id="programSuggestions" class="row" style="flex-wrap:wrap"></div>
         </div>
       </div>
 
       <!-- Gallery -->
-      <div id="gallery" class="card" style="margin-top:12px; display:none">
+      <div id="gallery" class="card fade-in" style="display:none">
         <h2>
-          <span>Pictures</span>
+          <span>📷 Photos</span>
           <span class="row">
-            <button class="btn" id="addPhotosBtn">＋ Add</button>
+            <button class="btn primary" id="addPhotosBtn">＋ Ajouter</button>
             <input type="file" id="photosInput" accept="image/*" multiple style="display:none" />
           </span>
         </h2>
         <div class="body">
-          <div class="drop" id="dropZone">Tap “Add” or drag & drop (desktop).</div>
+          <div class="drop" id="dropZone">Appuie sur “Ajouter” (ou glisser-déposer sur ordinateur).</div>
           <div id="galleryGrid" class="gallery" style="margin-top:10px"></div>
-          <p id="galleryEmpty" class="muted" style="text-align:center;display:none">No photos yet.</p>
+          <p id="galleryEmpty" class="muted" style="text-align:center;display:none">Aucune photo pour l’instant.</p>
         </div>
       </div>
 
       <!-- Notes -->
-      <div id="notes" class="card" style="margin-top:12px; display:none">
+      <div id="notes" class="card fade-in" style="display:none">
         <h2>
-          <span>Notes</span>
-          <span class="row muted" style="font-size:12px">Auto timestamp <input type="checkbox" id="autoDate" checked /></span>
+          <span>📝 Notes</span>
+          <span class="row muted" style="font-size:12px">Horodatage auto <input type="checkbox" id="autoDate" checked /></span>
         </h2>
         <div class="body">
-          <div class="row" style="margin-bottom:8px">
-            <button class="btn" data-stamp="🍺">🍺</button>
-            <button class="btn" data-stamp="🥧">🥧</button>
-            <button class="btn" data-stamp="🏰">🏰</button>
-            <button class="btn" data-stamp="🎶">🎶</button>
-            <button class="btn" data-stamp="🌊">🌊</button>
-            <button class="btn" data-stamp="🚐">🚐</button>
-            <button class="btn" data-stamp="☔️">☔️</button>
+          <div class="row" style="margin-bottom:8px; gap:8px">
+            <button class="btn">🍺</button>
+            <button class="btn">🥧</button>
+            <button class="btn">🏰</button>
+            <button class="btn">🎶</button>
+            <button class="btn">🌊</button>
+            <button class="btn">🚐</button>
+            <button class="btn">☔️</button>
           </div>
-          <textarea id="notesArea" placeholder="Your notes, addresses, times..."></textarea>
+          <textarea id="notesArea" placeholder="Vos notes, adresses, horaires, souvenirs…"></textarea>
         </div>
       </div>
 
       <!-- Expenses -->
-      <div id="expenses" class="card" style="margin-top:12px; display:none">
+      <div id="expenses" class="card fade-in" style="display:none">
         <h2>
-          <span>Expenses</span>
+          <span>💷 Dépenses</span>
           <span class="row" style="width:100%">
             <select id="payer" style="flex:1;min-width:110px">
               <option value="Yacintha">Yacintha</option>
               <option value="Loufi">Loufi</option>
             </select>
-            <input type="text" id="expenseWhat" placeholder="What" style="flex:2" />
-            <input type="number" id="expenseAmt" placeholder="Amount" step="0.01" style="width:120px" />
+            <input type="text" id="expenseWhat" placeholder="Quoi" style="flex:2" />
+            <input type="number" id="expenseAmt" placeholder="Montant" step="0.01" style="width:120px" />
             <select id="expenseCat" style="flex:1;min-width:130px">
-              <option>Food</option><option>Transport</option><option>Accommodation</option><option>Attractions</option><option>Fuel</option><option>Other</option>
+              <option>Food</option><option>Transport</option><option>Accommodation</option>
+              <option>Attractions</option><option>Fuel</option><option>Other</option>
             </select>
             <input type="text" id="expenseCur" value="GBP" style="width:90px" />
-            <button class="btn" id="expenseAdd">Add</button>
+            <button class="btn primary" id="expenseAdd">Ajouter</button>
           </span>
         </h2>
         <div class="body">
-          <table style="width:100%;border-collapse:collapse">
-            <thead><tr style="color:#cbd5e1;font-size:14px"><th style="padding:8px;border-bottom:1px solid var(--border)">Date</th><th style="padding:8px;border-bottom:1px solid var(--border)">Payer</th><th style="padding:8px;border-bottom:1px solid var(--border)">What</th><th style="padding:8px;border-bottom:1px solid var(--border)">Cat</th><th style="padding:8px;border-bottom:1px solid var(--border)">Amt</th><th></th></tr></thead>
-            <tbody id="expenseTbody" style="font-size:15px"></tbody>
-          </table>
-          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;font-size:15px">
-            <div style="padding:8px;border:1px solid var(--border);border-radius:10px">Total Y: <strong id="totY">0</strong></div>
-            <div style="padding:8px;border:1px solid var(--border);border-radius:10px">Total L: <strong id="totL">0</strong></div>
-            <div style="padding:8px;border:1px solid var(--border);border-radius:10px">All: <strong id="totAll">0</strong> <span id="totCur"></span></div>
-            <div style="padding:8px;border:1px solid var(--border);border-radius:10px">Settle: <strong id="settlement">—</strong></div>
+          <div style="overflow:auto">
+            <table style="width:100%;border-collapse:collapse;min-width:620px">
+              <thead>
+                <tr style="color:#e9edff;font-size:14px">
+                  <th style="padding:8px;border-bottom:1px solid var(--border); text-align:left">Date</th>
+                  <th style="padding:8px;border-bottom:1px solid var(--border); text-align:left">Payeur</th>
+                  <th style="padding:8px;border-bottom:1px solid var(--border); text-align:left">Quoi</th>
+                  <th style="padding:8px;border-bottom:1px solid var(--border); text-align:left">Cat.</th>
+                  <th style="padding:8px;border-bottom:1px solid var(--border); text-align:left">Montant</th>
+                  <th style="padding:8px;border-bottom:1px solid var(--border)"></th>
+                </tr>
+              </thead>
+              <tbody id="expenseTbody" style="font-size:15px"></tbody>
+            </table>
           </div>
+          <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;font-size:15px">
+            <div class="chip">Total Y: <strong id="totY" style="margin-left:6px">0</strong></div>
+            <div class="chip">Total L: <strong id="totL" style="margin-left:6px">0</strong></div>
+            <div class="chip">Total: <strong id="totAll" style="margin-left:6px">0</strong> <span id="totCur" style="margin-left:4px"></span></div>
+            <div class="chip" style="background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.08))">Ajustement: <strong id="settlement" style="margin-left:6px">—</strong></div>
+          </div>
+          <p class="muted" style="margin-top:8px">Hypothèse 50/50 : si l’un paie plus que la moitié, l’autre rembourse la différence.</p>
         </div>
       </div>
 
       <!-- Checklist -->
-      <div id="checklist" class="card" style="margin-top:12px; display:none">
-        <h2><span>Checklist</span><span class="badge" id="progressBadge">Progress: 0%</span></h2>
+      <div id="checklist" class="card fade-in" style="display:none">
+        <h2><span>✅ Checklist</span><span class="badge" id="progressBadge">Progress: 0%</span></h2>
         <div class="body">
           <div class="progress"><div id="progressBar"></div></div>
           <div class="row" style="margin-top:10px;margin-bottom:10px">
-            <input type="text" id="taskInput" placeholder="Add an item" />
-            <button class="btn" id="taskAdd">Add</button>
+            <input type="text" id="taskInput" placeholder="Ajouter un item" />
+            <button class="btn primary" id="taskAdd">Ajouter</button>
           </div>
           <div id="taskList" class="list"></div>
         </div>
       </div>
 
-      <footer>Stored locally. Use Export/Import to back up or share.</footer>
+      <footer>💡 Tout est stocké en local dans votre navigateur. Utilisez <strong>Export</strong>/<strong>Import</strong> pour sauvegarder/partager entre appareils.</footer>
     </section>
   </div>
 
-  <!-- Bottom tab bar -->
+  <!-- Bottom Tab Bar -->
   <nav class="tabs" id="tabs">
-    <button class="tab active" data-tab="itinerary">🗺️ Itinerary</button>
-    <button class="tab" data-tab="program">🎯 Program</button>
-    <button class="tab" data-tab="gallery">📷 Pictures</button>
-    <button class="tab" data-tab="notes">📝 Notes</button>
-    <button class="tab" data-tab="expenses">💷 Expenses</button>
-    <button class="tab" data-tab="checklist">✅ Checklist</button>
+    <button class="tab active" data-tab="itinerary"><span class="ico">🗺️</span>Itinéraire</button>
+    <button class="tab" data-tab="program"><span class="ico">🎯</span>Programme</button>
+    <button class="tab" data-tab="gallery"><span class="ico">📷</span>Photos</button>
+    <button class="tab" data-tab="notes"><span class="ico">📝</span>Notes</button>
+    <button class="tab" data-tab="expenses"><span class="ico">💷</span>Dépenses</button>
+    <button class="tab" data-tab="checklist"><span class="ico">✅</span>Checklist</button>
   </nav>
 
   <script>
-    const STORAGE_KEY = "trip-scotland-yl-mobile-v1";
+    const STORAGE_KEY = "trip-scotland-yl-insta-v1";
     const defaultData = {
       dates:"21/09 → 26/09",
       itinerary:[
-        {date:"21/09", title:"Arrival — Hotel — Rest", details:"Arrive in Edinburgh, check-in, relax."},
+        {date:"21/09", title:"Arrival — Hotel — Rest", details:"Arrivée à Édimbourg, check-in, soirée cool."},
         {date:"22/09", title:"Edinburgh visit", details:"Old Town, Royal Mile, Edinburgh Castle, Dean Village."},
-        {date:"23/09", title:"Campervan pick up", details:"Pick up campervan, groceries, start drive."},
+        {date:"23/09", title:"Campervan pick up", details:"Récupérer le van, courses, départ scenic."},
         {date:"24/09", title:"Isle of Skye", details:"Fairy Pools, Old Man of Storr, Quiraing."},
-        {date:"25/09", title:"Return Edinburgh — Rest", details:"Return van, hotel, calm evening."},
-        {date:"26/09", title:"Return Brussels", details:"Flight back to Brussels."}
+        {date:"25/09", title:"Return Edinburgh — Rest", details:"Retour van, hôtel, Calton Hill sunset."},
+        {date:"26/09", title:"Return Brussels", details:"Transfert aéroport, vol retour."}
       ],
       programSuggestions:[
-        "Edinburgh Castle guided visit",
-        "Arthur's Seat hike (morning)",
-        "Dean Village + Water of Leith walk",
-        "National Museum of Scotland (free)",
-        "Scottish National Gallery",
-        "Ghost tour in Old Town (evening)",
+        "Edinburgh Castle (visite guidée)",
+        "Arthur's Seat (matin, vue waouh)",
+        "Dean Village + Water of Leith",
+        "National Museum of Scotland (gratuit)",
+        "Scottish National Gallery (gratuit)",
+        "Ghost tour Old Town (soir)",
         "Calton Hill sunset",
         "Princes Street Gardens picnic",
-        "Haggis tasting at a traditional pub",
-        "Camera Obscura & World of Illusions",
-        "Brunch in Stockbridge",
-        "Live folk music pub night",
+        "Haggis tasting (pub traditionnel)",
+        "Camera Obscura & Illusions",
+        "Brunch à Stockbridge",
+        "Live folk music (pub night)",
         "Newhaven harbour walk (fish & chips)"
       ],
       notes:"",
       gallery:[],
       expenses:{currency:"GBP", items:[]},
       checklist:[
-        {id:"id",text:"Passport / ID",done:false},
-        {id:"tickets",text:"Flight tickets / QR codes",done:false},
-        {id:"cards",text:"Bank cards + cash",done:false},
-        {id:"rainjacket",text:"Rain jacket",done:false},
-        {id:"shoes",text:"Walking shoes",done:false},
-        {id:"sleepbag",text:"Sleeping bag (campervan)",done:false},
-        {id:"toothbrush",text:"Toothbrushes",done:false},
-        {id:"toothpaste",text:"Toothpaste",done:false},
-        {id:"adapter",text:"UK plug adapter (Type G)",done:false},
-        {id:"chargers",text:"Chargers & powerbank",done:false},
-        {id:"meds",text:"Basic meds (ibuprofen, plasters)",done:false}
+        {id:"id",text:"Passeport / ID",done:false},
+        {id:"tickets",text:"Billets / QR codes",done:false},
+        {id:"cards",text:"Cartes bancaires + cash",done:false},
+        {id:"rainjacket",text:"Veste de pluie",done:false},
+        {id:"shoes",text:"Chaussures de marche",done:false},
+        {id:"sleepbag",text:"Sacs de couchage (van)",done:false},
+        {id:"toothbrush",text:"Brosses à dents",done:false},
+        {id:"toothpaste",text:"Dentifrice",done:false},
+        {id:"adapter",text:"Adaptateur UK (Type G)",done:false},
+        {id:"chargers",text:"Chargeurs & powerbank",done:false},
+        {id:"meds",text:"Trousse médocs (ibuprofen, pansements)",done:false}
       ]
     };
 
@@ -254,37 +363,45 @@
     function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
     let state = loadState();
-    document.getElementById("subtitle").textContent = state.dates + " — Scotland";
-
-    // Tabs (bottom bar)
+    // Tabs
     const tabs = document.querySelectorAll(".tab");
-    tabs.forEach(t=>{
-      t.addEventListener("click",()=>{
-        tabs.forEach(x=>x.classList.remove("active"));
-        t.classList.add("active");
-        const name = t.dataset.tab;
-        document.querySelectorAll(".card").forEach(c=>c.style.display="none");
-        document.getElementById(name).style.display = "";
-        window.scrollTo({top:0, behavior:"smooth"});
-      });
-    });
+    function showTab(name){
+      tabs.forEach(x=>x.classList.toggle("active", x.dataset.tab===name));
+      document.querySelectorAll(".card").forEach(c=>c.style.display="none");
+      const el = document.getElementById(name);
+      if(el){ el.style.display=""; el.classList.add("fade-in"); }
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+    tabs.forEach(t=> t.addEventListener("click", ()=> showTab(t.dataset.tab)));
 
-    // Itinerary
+    // Itinerary render
     const itineraryList = document.getElementById("itineraryList");
     function renderItinerary(){
       itineraryList.innerHTML = "";
       state.itinerary.forEach((it, idx)=>{
         const wrap = document.createElement("div");
         wrap.className = "item";
-        wrap.innerHTML = `<div class="row" style="justify-content:space-between;align-items:center;margin-bottom:8px">
-          <div class="row"><span class="badge">${escapeHtml(it.date)}</span><input type="text" value="${escapeHtml(it.title)}" data-k="title" style="min-width:220px" /></div>
-          <div class="row"><button class="btn" data-action="up">⬆️</button><button class="btn" data-action="down">⬇️</button><button class="btn" data-action="del">🗑️</button></div>
-          </div><textarea data-k="details" placeholder="Details...">${escapeHtml(it.details||"")}</textarea>`;
+        wrap.innerHTML = `
+          <div class="row" style="justify-content:space-between; align-items:center; margin-bottom:8px">
+            <div class="row">
+              <span class="badge">${escapeHtml(it.date)}</span>
+              <input type="text" value="${escapeHtml(it.title)}" data-k="title" style="min-width:220px" />
+            </div>
+            <div class="row">
+              <button class="btn" data-action="up" title="Monter">⬆️</button>
+              <button class="btn" data-action="down" title="Descendre">⬇️</button>
+              <button class="btn" data-action="del" title="Supprimer">🗑️</button>
+            </div>
+          </div>
+          <textarea data-k="details" placeholder="Détails…">${escapeHtml(it.details||"")}</textarea>
+        `;
         wrap.querySelector('[data-action="up"]').onclick = ()=>{ if(idx>0){ const a=state.itinerary[idx-1]; state.itinerary[idx-1]=state.itinerary[idx]; state.itinerary[idx]=a; saveState(); renderItinerary(); bootProgram(); } };
         wrap.querySelector('[data-action="down"]').onclick = ()=>{ if(idx<state.itinerary.length-1){ const a=state.itinerary[idx+1]; state.itinerary[idx+1]=state.itinerary[idx]; state.itinerary[idx]=a; saveState(); renderItinerary(); bootProgram(); } };
         wrap.querySelector('[data-action="del"]').onclick = ()=>{ state.itinerary.splice(idx,1); saveState(); renderItinerary(); bootProgram(); };
         wrap.querySelectorAll("input,textarea").forEach(field=>{
-          field.addEventListener("input", ()=>{ const k = field.dataset.k; state.itinerary[idx][k] = field.value; saveState(); bootProgram(); });
+          field.addEventListener("input", ()=>{
+            const k = field.dataset.k; state.itinerary[idx][k] = field.value; saveState(); bootProgram();
+          });
         });
         itineraryList.appendChild(wrap);
       });
@@ -295,42 +412,35 @@
       const details = document.getElementById("newDayDetails").value.trim();
       if(!d||!title) return;
       state.itinerary.push({date:d,title,details});
-      document.getElementById("newDayDate").value=""; document.getElementById("newDayTitle").value=""; document.getElementById("newDayDetails").value="";
+      document.getElementById("newDayDate").value="";
+      document.getElementById("newDayTitle").value="";
+      document.getElementById("newDayDetails").value="";
       saveState(); renderItinerary(); bootProgram();
     };
 
-    // Program
+    // Program suggestions
+    function chip(text){
+      const b=document.createElement("button");
+      b.className="chip"; b.style.cursor="pointer";
+      b.textContent="＋ "+text;
+      b.onclick=()=>{
+        const idx=parseInt(document.getElementById("programDaySelect").value||"0",10);
+        if(state.itinerary[idx]){
+          state.itinerary[idx].details=(state.itinerary[idx].details?state.itinerary[idx].details+"\\n":"")+"• "+text;
+          saveState(); renderItinerary();
+        }
+      };
+      return b;
+    }
     function bootProgram(){
       const sel = document.getElementById("programDaySelect");
       sel.innerHTML = "";
-      state.itinerary.forEach((it, idx)=>{
-        const o=document.createElement("option");
-        o.value=idx; o.textContent=(it.date?it.date+" — ":"")+it.title;
-        sel.appendChild(o);
-      });
-      const pick = document.getElementById("programPick");
-      pick.innerHTML = '<option value="">— Choose —</option>';
-      state.programSuggestions.forEach((s,i)=>{
-        const o=document.createElement("option");
-        o.value=i; o.textContent=s;
-        pick.appendChild(o);
-      });
-      const grid = document.getElementById("programSuggestions");
-      grid.innerHTML = "";
-      state.programSuggestions.forEach((s)=>{
-        const b=document.createElement("button");
-        b.className="btn";
-        b.style.margin="6px 6px 0 0";
-        b.textContent="＋ "+s;
-        b.onclick=()=>{
-          const idx=parseInt(document.getElementById("programDaySelect").value||"0",10);
-          if(state.itinerary[idx]){
-            state.itinerary[idx].details=(state.itinerary[idx].details?state.itinerary[idx].details+"\\n":"")+"• "+s;
-            saveState(); renderItinerary();
-          }
-        };
-        grid.appendChild(b);
-      });
+      state.itinerary.forEach((it, idx)=>{ const o=document.createElement("option"); o.value=idx; o.textContent=(it.date?it.date+" — ":"")+it.title; sel.appendChild(o); });
+      const pick = document.getElementById("programPick"); pick.innerHTML = '<option value="">— Choisir —</option>';
+      state.programSuggestions.forEach((s,i)=>{ const o=document.createElement("option"); o.value=i; o.textContent=s; pick.appendChild(o); });
+      const area = document.getElementById("programSuggestions");
+      area.innerHTML = "";
+      state.programSuggestions.forEach(s=> area.appendChild(chip(s)));
     }
     document.getElementById("programAdd").onclick = ()=>{
       const pick = document.getElementById("programPick");
@@ -356,7 +466,7 @@
         fig.innerHTML = `
           <img src="${item.src}" alt="photo" />
           <figcaption style="padding:10px;border-top:1px solid var(--border)">
-            <input type="text" value="${escapeHtml(item.caption||'')}" placeholder="Caption..." data-id="${item.id}" class="caption"/>
+            <input type="text" value="${escapeHtml(item.caption||'')}" placeholder="Légende…" data-id="${item.id}" class="caption"/>
             <div class="row" style="margin-top:6px;justify-content:space-between;font-size:12px;color:var(--muted)">
               <span>${item.date}</span>
               <button class="btn" data-del="${item.id}">🗑️</button>
@@ -386,8 +496,8 @@
     }
     document.getElementById("addPhotosBtn").onclick = ()=> document.getElementById("photosInput").click();
     document.getElementById("photosInput").addEventListener("change",(e)=> handleFiles(e.target.files));
-    ["dragover","dragenter"].forEach(ev=> dropZone.addEventListener(ev,(e)=>{ e.preventDefault(); dropZone.style.background="rgba(255,255,255,.04)"; }));
-    ["dragleave","drop"].forEach(ev=> dropZone.addEventListener(ev,(e)=>{ e.preventDefault(); dropZone.style.background=""; }));
+    ["dragover","dragenter"].forEach(ev=> dropZone.addEventListener(ev,(e)=>{ e.preventDefault(); dropZone.style.background="rgba(255,255,255,.10)"; }));
+    ["dragleave","drop"].forEach(ev=> dropZone.addEventListener(ev,(e)=>{ e.preventDefault(); dropZone.style.background="rgba(255,255,255,.06)"; }));
     dropZone.addEventListener("drop",(e)=> handleFiles(e.dataTransfer.files));
     function compressImage(file, maxW, maxH, quality=0.85){
       return new Promise((resolve,reject)=>{
@@ -413,10 +523,10 @@
     const notesArea = document.getElementById("notesArea");
     const autoDate = document.getElementById("autoDate");
     notesArea.value = state.notes || "";
-    document.querySelectorAll('#notes [data-stamp]').forEach(btn=>{
+    document.querySelectorAll('#notes .btn').forEach(btn=>{
       btn.addEventListener("click",()=>{
-        const stamp=btn.dataset.stamp;
-        const prefix=autoDate.checked? "\\n["+new Date().toLocaleString()+"] " : "\\n";
+        const stamp = btn.textContent.trim();
+        const prefix = autoDate.checked ? "\\n["+new Date().toLocaleString()+"] " : "\\n";
         notesArea.value += prefix + stamp + " ";
         state.notes = notesArea.value; saveState();
       });
@@ -448,9 +558,9 @@
       const half=all/2;
       let text="—";
       if(all>0){
-        if(y>half) text="Loufi owes "+(y-half).toFixed(2)+" "+cur+" to Yacintha";
-        else if(l>half) text="Yacintha owes "+(l-half).toFixed(2)+" "+cur+" to Loufi";
-        else text="Balanced";
+        if(y>half) text="Loufi → Yacintha : "+(y-half).toFixed(2)+" "+cur;
+        else if(l>half) text="Yacintha → Loufi : "+(l-half).toFixed(2)+" "+cur;
+        else text="Équilibré";
       }
       document.getElementById("settlement").textContent = text;
     }
@@ -507,11 +617,11 @@
       saveState(); renderChecklist();
     };
 
-    // Export/Import
+    // Export / Import
     document.getElementById("exportBtn").onclick = ()=>{
       const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
       const url=URL.createObjectURL(blob);
-      const a=document.createElement("a"); a.href=url; a.download="trip-scotland-yacintha-loufi-mobile.json"; a.click();
+      const a=document.createElement("a"); a.href=url; a.download="trip-scotland-yacintha-loufi.json"; a.click();
       URL.revokeObjectURL(url);
     };
     document.getElementById("importBtn").onclick = ()=> document.getElementById("fileInput").click();
@@ -520,7 +630,7 @@
       const reader=new FileReader();
       reader.onload=()=>{
         try{ state = {...state, ...JSON.parse(reader.result)}; saveState(); boot(); }
-        catch(err){ alert("Invalid file"); }
+        catch(err){ alert("Fichier invalide"); }
       };
       reader.readAsText(f);
     });
@@ -531,6 +641,7 @@
       renderGallery();
       renderExpenses();
       renderChecklist();
+      showTab("itinerary");
     }
     boot();
   </script>
